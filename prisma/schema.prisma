@@ -10,6 +10,42 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Game {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+
+    blueTeam   Team        @relation("blueTeam", fields: [blueTeamId], references: [id])
+    blueTeamId String
+    redTeam    Team        @relation("redTeam", fields: [redTeamId], references: [id])
+    redTeamId  String
+    draft      DraftStep[]
+}
+
+model DraftStep {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+
+    Game   Game        @relation(fields: [gameId], references: [id])
+    gameId String
+    type   PickBanType
+    team   Team        @relation(fields: [teamId], references: [id])
+    teamId String
+}
+
+enum PickBanType {
+    Pick
+    Ban
+}
+
+model Team {
+    id        String      @id @default(cuid())
+    name      String      @unique
+    members   User[]
+    blueGame  Game[]      @relation("blueTeam")
+    redGame   Game[]      @relation("redTeam")
+    DraftStep DraftStep[]
+}
+
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -45,6 +81,8 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    Team          Team?     @relation(fields: [teamId], references: [id])
+    teamId        String?
 }
 
 model VerificationToken {
