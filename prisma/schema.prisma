@@ -14,11 +14,12 @@ model Game {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
 
-    blueTeam   Team        @relation("blueTeam", fields: [blueTeamId], references: [id])
-    blueTeamId String
-    redTeam    Team        @relation("redTeam", fields: [redTeamId], references: [id])
-    redTeamId  String
-    draft      DraftStep[]
+    blueTeam      Team        @relation("blueTeam", fields: [blueTeamId], references: [id])
+    blueTeamId    String
+    redTeam       Team        @relation("redTeam", fields: [redTeamId], references: [id])
+    redTeamId     String
+    draft         DraftStep[]
+    isActiveDraft Boolean     @default(true)
 }
 
 model DraftStep {
