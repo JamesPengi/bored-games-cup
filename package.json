@@ -44,6 +44,6 @@
     "initVersion": "5.13.1"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed/teams.ts"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed/teams.ts && ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed/users.ts"
   }
 }
