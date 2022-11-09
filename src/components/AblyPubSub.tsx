@@ -3,7 +3,9 @@ import Ably from 'ably/promises';
 import { useEffect } from 'react';
 
 const ably: Types.RealtimePromise = new Ably.Realtime.Promise({
-  authUrl: '/api/createTokenRequest',
+  authUrl: process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}/api/createTokenRequest`
+    : `http://localhost:3000/api/createTokenRequest`,
 });
 
 export function useChannel(
